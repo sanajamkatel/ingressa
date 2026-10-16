@@ -1,4 +1,4 @@
-<<<<<<< Updated upstream
+
 # Ingressa 
 
 **The modern, production-ready job application dashboard with automated Gmail ingestion, intelligent spreadsheet tracking, and real-time analytics.**
@@ -124,4 +124,5 @@ Open [http://localhost:3000](http://localhost:3000).
 ## License
 
 All rights reserved. See [LICENSE](./LICENSE).
->>>>>>> Stashed changes
+
+demo preview deployment.
