@@ -71,6 +71,15 @@ jobs:
       - name: Apply database schema
         run: npx prisma migrate deploy
 
+      # Next.js generates ambient types (e.g. the LayoutProps<'/'> used in
+      # src/app/layout.tsx) into .next/types/ as a side effect of `next build` or
+      # `next dev` — on a fresh CI checkout neither has run yet, so a standalone
+      # `tsc --noEmit` fails with "Cannot find name 'LayoutProps'". `next typegen`
+      # generates just those types, without a full build, so typecheck can still run
+      # as a fast, separate gate before the full build step below.
+      - name: Generate Next.js route types
+        run: npx next typegen
+
       - name: Run typecheck
         run: npm run typecheck
 
