@@ -2,13 +2,14 @@
   "name": "ingressa",
   "version": "0.1.0",
   "private": true,
- "scripts": {
+"scripts": {
   "dev": "next dev",
   "build": "next build",
   "start": "next start",
   "lint": "eslint",
   "typecheck": "tsc --noEmit",
-  "postinstall": "prisma generate"
+  "postinstall": "prisma generate",
+  "test": "vitest run"
 },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.132.1",
