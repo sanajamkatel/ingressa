@@ -1,25 +1,17 @@
 import Redis from "ioredis";
 
-const globalForRedis = global as unknown as { redis: Redis | null };
+const globalForRedis = global as unknown as { redis: Redis };
 
-const getRedisClient = (): Redis | null => {
-  // If no REDIS_URL is set in environment, don't attempt connecting to localhost during builds
-  if (!process.env.REDIS_URL) {
-    return null;
-  }
+const redisUrl = process.env.REDIS_URL || "redis://localhost:6379";
 
-  return (
-    globalForRedis.redis ||
-    new Redis(process.env.REDIS_URL, {
-      maxRetriesPerRequest: 1,
-      lazyConnect: true,         // Prevents connecting automatically upon instantiation
-      enableOfflineQueue: false,  // Prevents commands from queuing up when disconnected
-    })
-  );
-};
+export const redis =
+  globalForRedis.redis ||
+  new Redis(redisUrl, {
+    maxRetriesPerRequest: null,
+    lazyConnect: true,         // Prevents connecting automatically when instantiated during builds
+    enableOfflineQueue: false,  // Prevents queuing commands when disconnected
+  });
 
-export const redis = getRedisClient();
-
-if (process.env.NODE_ENV !== "production" && redis) {
+if (process.env.NODE_ENV !== "production") {
   globalForRedis.redis = redis;
 }
