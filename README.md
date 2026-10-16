@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ingressa 
 
-## Getting Started
+**The modern, production-ready job application dashboard with automated Gmail ingestion, intelligent spreadsheet tracking, and real-time analytics.**
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+##  What is Ingressa?
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Job hunting is exhausting, and keeping track of applications across dozens of spreadsheets, emails, and portals shouldn't be. **Ingressa** is a lightning-fast, zero-cost serverless command center designed to take the friction out of your job search.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Built with modern web technologies, Ingressa automatically syncs your application updates straight from Gmail, parses legacy Excel/CSV trackers with smart deduplication, and gives you a bird's-eye view of your interview pipeline—all wrapped in a gorgeous dark-mode interface.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+##  Key Features
 
-To learn more about Next.js, take a look at the following resources:
+* **Automated Gmail Sync:** Seamlessly scans and syncs job application emails, automatically extracting status updates and company responses so you never miss a beat.
+* **Smart Excel/CSV Importer:** Drag and drop your old spreadsheet trackers. Ingressa parses your rows instantly and handles intelligent deduplication so you never import double.
+* **Interactive Analytics & Funnels:** Visualize your job search pipeline with dynamic stat cards, follow-up trackers, and recent activity feeds.
+* **Dark Mode by Default:** Designed from the ground up with a distraction-free, elegant dark aesthetic and dynamic time-of-day atmospheric backgrounds.
+* **Secure Authentication:** Powered by Clerk for frictionless, secure user logins and protected private routes.
+* **High-Performance Architecture:** Backed by Upstash Redis for rapid rate limiting and smooth client-side caching.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+##  The Tech Stack
 
-## Deploy on Vercel
+Ingressa is built using a modern, scalable cloud architecture:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+* **Framework:** Next.js (App Router, Server Actions, Serverless Functions)
+* **Language:** TypeScript
+* **Styling:** Tailwind CSS
+* **Database & ORM:** PostgreSQL (Supabase/Neon) managed via Prisma ORM
+* **Caching & Rate Limiting:** Upstash Redis
+* **Authentication:** Clerk
+* **Testing:** Vitest (Comprehensive integration test suite)
+* **CI/CD:** GitHub Actions & Vercel automated deployments
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Live Demo & Deployment
+
+Ingressa is fully optimized for zero-cost cloud deployment:
+
+* **Hosted on:** Vercel
+* **Database:** Cloud PostgreSQL
+* **CI/CD Pipeline:** Fully automated GitHub Actions integration tests running on every push to `main`.
+
+---
+
+Open [Ingressa](https://ingressa-alpha.vercel.app/) in your browser to see Ingressa in action!
+
+---
+
