@@ -28,9 +28,7 @@ const THEME_INIT_SCRIPT = `
 (function () {
   try {
     var stored = localStorage.getItem('ingressa-theme');
-    var theme = stored === 'dark' || stored === 'light'
-      ? stored
-      : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    var theme = stored === 'dark' || stored === 'light' ? stored : 'dark';
     document.documentElement.setAttribute('data-theme', theme);
   } catch (e) {}
 })();
@@ -41,6 +39,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <ClerkProvider afterSignOutUrl="/">
       <html
         lang="en"
+        data-theme="dark"
         className={`${cormorant.variable} ${fredoka.variable} h-full antialiased`}
         suppressHydrationWarning
       >
