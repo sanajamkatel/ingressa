@@ -31,16 +31,6 @@ function ApplicationsIcon(props: IconProps) {
   );
 }
 
-function AnalyticsIcon(props: IconProps) {
-  return (
-    <svg {...BASE_PROPS} {...props}>
-      <path d="M4 16.5V11" />
-      <path d="M10 16.5V6" />
-      <path d="M16 16.5v-7" />
-    </svg>
-  );
-}
-
 function SettingsIcon(props: IconProps) {
   return (
     <svg {...BASE_PROPS} {...props}>
@@ -51,8 +41,7 @@ function SettingsIcon(props: IconProps) {
 }
 
 export const NAV_ICONS: Record<NavKey, (props: IconProps) => React.JSX.Element> = {
-  home: HomeIcon,
+  dashboard: HomeIcon,
   applications: ApplicationsIcon,
-  analytics: AnalyticsIcon,
   settings: SettingsIcon,
 };

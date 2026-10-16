@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type MouseEvent } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -12,6 +12,7 @@ import { NAV_ACCENTS, type NavItem as NavItemType } from "@/lib/constants";
 interface NavItemProps {
   item: NavItemType;
   isActive: boolean;
+  onNavigate?: (href: string, event: MouseEvent) => void;
 }
 
 const EASE = [0.4, 0, 0.2, 1] as const;
@@ -46,7 +47,7 @@ const animalVariants = {
   },
 };
 
-export function NavItem({ item, isActive }: NavItemProps) {
+export function NavItem({ item, isActive, onNavigate }: NavItemProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [hasRevealed, setHasRevealed] = useState(false);
   const reducedMotion = useReducedMotion();
@@ -67,6 +68,7 @@ export function NavItem({ item, isActive }: NavItemProps) {
     <Link
       href={item.href}
       aria-current={isActive ? "page" : undefined}
+      onClick={(event) => onNavigate?.(item.href, event)}
       onMouseEnter={activate}
       onMouseLeave={deactivate}
       onFocus={activate}
@@ -81,7 +83,7 @@ export function NavItem({ item, isActive }: NavItemProps) {
       />
 
       {/* Desktop/tablet: label <-> mascot swap, stacked in one grid cell */}
-      <span className="relative hidden h-5 overflow-hidden sm:grid sm:place-items-center">
+      <span className="relative hidden h-7 overflow-hidden sm:grid sm:place-items-center">
         <motion.span
           variants={reducedMotion ? undefined : textVariants}
           animate={reducedMotion ? { opacity: isHovered ? 0 : 1 } : variantState}
@@ -106,7 +108,7 @@ export function NavItem({ item, isActive }: NavItemProps) {
               width={48}
               height={48}
               unoptimized
-              className="h-5 w-5 rounded-full object-cover"
+              className="h-7 w-7 rounded-full object-cover"
             />
           )}
         </motion.span>

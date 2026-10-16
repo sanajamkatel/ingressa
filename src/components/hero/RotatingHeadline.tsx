@@ -51,25 +51,25 @@ export function RotatingHeadline() {
   const current = ROTATING_STEPS[index];
 
   return (
-    <h1 className="flex flex-wrap items-center gap-x-3 gap-y-2 text-5xl font-semibold leading-[1.05] tracking-tight text-fg sm:text-6xl">
+    <h1 className="flex flex-col items-center gap-y-3 text-3xl font-semibold leading-[1.15] tracking-tight text-fg sm:text-4xl">
       <span>An automated system to</span>
 
       <motion.span
         layout={!reducedMotion}
-        transition={reducedMotion ? { duration: 0 } : { type: "spring", stiffness: 350, damping: 28 }}
-        className={`inline-flex items-center gap-2 rounded-full border px-4 py-1.5 transition-colors duration-300 ${current.bgClass} ${current.borderClass}`}
+        transition={reducedMotion ? { duration: 0 } : { type: "spring", stiffness: 400, damping: 30 }}
+        className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-1 transition-colors duration-300 ${current.bgClass} ${current.borderClass}`}
       >
-        <span className={`h-2 w-2 shrink-0 rounded-full ${current.dotClass}`} aria-hidden="true" />
+        <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${current.dotClass}`} aria-hidden="true" />
 
-        <span className="relative inline-block h-9 overflow-hidden sm:h-11">
+        <span className="relative inline-block h-7 overflow-hidden text-center sm:h-9">
           <AnimatePresence mode="wait" initial={false}>
             <motion.span
               key={current.text}
-              initial={reducedMotion ? { opacity: 0 } : { y: 20, opacity: 0 }}
+              initial={reducedMotion ? { opacity: 0 } : { y: 16, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              exit={reducedMotion ? { opacity: 0 } : { y: -20, opacity: 0 }}
+              exit={reducedMotion ? { opacity: 0 } : { y: -16, opacity: 0 }}
               transition={{ duration: 0.22, ease: "easeInOut" }}
-              className={`block text-3xl font-semibold sm:text-4xl ${current.textClass}`}
+              className={`block whitespace-nowrap text-2xl font-semibold sm:text-3xl ${current.textClass}`}
             >
               {current.text}
             </motion.span>

@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Application {
+  id                String   @id @default(uuid())
+  userId            String // Clerk authentication ID
+  company           String?
+  position          String?
+  location          String?
+  salary            String?
+  status            String?
+  // True once a user has explicitly set status by hand via EditApplicationModal —
+  // tells the Gmail sync merge (deduplication.ts) to never move status for this row,
+  // even on what would otherwise be forward progress. Cleared back to false when the
+  // user clears status to null, reopening the field to automatic sync updates.
+  statusManuallySet Boolean  @default(false)
+  dateApplied       String?
+  jobUrl            String?
+  source            String?
+  contactName       String?
+  contactEmail      String?
+  notes             String?
+  gmailMessageId    String? // Gmail message this row originated from, if any — prevents reprocessing the same email
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@unique([userId, gmailMessageId])
+  @@index([userId])
+}
+
+model EmailSyncState {
+  userId    String   @id // one row per user; Clerk authentication ID
+  historyId String // Gmail history.list cursor — resume point for the next incremental sync
+  updatedAt DateTime @updatedAt
+}

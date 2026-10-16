@@ -36,6 +36,13 @@
   --radius-md: 14px;
   --radius-lg: 22px;
   --radius-full: 999px;
+
+  /* No scrim in light mode — the day photo shows with no white cast */
+  --bg-image-scrim: rgba(255, 255, 255, 0);
+
+  /* Soft ambient lift for text sitting directly on the background photo —
+     imperceptible on opaque cards, but keeps open-page text readable. */
+  --text-shadow-ambient: 0 1px 3px rgba(0, 0, 0, 0.22);
 }
 
 :root[data-theme="dark"] {
@@ -69,6 +76,12 @@
 
   /* Shadows */
   --shadow-color: 0 0 0;
+
+  /* Scrim over the time-of-day background photo, for text contrast */
+  --bg-image-scrim: rgba(0, 0, 0, 0.55);
+
+  /* Soft ambient lift for text sitting directly on the background photo */
+  --text-shadow-ambient: 0 1px 3px rgba(0, 0, 0, 0.45);
 }
 
 @theme inline {
@@ -95,8 +108,8 @@
   --color-nav-tracker: var(--nav-tracker);
   --color-nav-settings: var(--nav-settings);
 
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-fredoka);
+  --font-display: var(--font-cormorant);
 }
 
 html {
@@ -107,13 +120,15 @@ body {
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  text-shadow: var(--text-shadow-ambient);
 }
 
 h1,
 h2,
 h3,
 h4 {
-  letter-spacing: -0.02em;
+  font-family: var(--font-display), serif;
+  letter-spacing: 0;
   font-weight: 600;
 }
 
@@ -126,16 +141,6 @@ h4 {
   outline: 2px solid var(--brand);
   outline-offset: 2px;
   border-radius: var(--radius-sm);
-}
-
-.orbit-rotate {
-  animation: orbit-spin 50s linear infinite;
-}
-
-@keyframes orbit-spin {
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

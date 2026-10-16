@@ -1,0 +1,81 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    # The test suite is integration-style by design (see e.g.
+    # applications-data.integration.test.ts, rate-limit.test.ts) — it exercises real
+    # Prisma queries and a real Redis client rather than mocking the database/cache
+    # layer, so CI needs live Postgres and Redis instances, not just Node.
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: ingressa_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/ingressa_test?schema=public
+      REDIS_URL: redis://localhost:6379
+      # Never called for real — email-parser.test.ts and email-ingestion.test.ts mock
+      # Claude extraction rather than hitting the live API. The Anthropic SDK just needs
+      # a non-empty string at client construction time (src/lib/email-parser.ts module
+      # scope), or every test file that imports it fails to load.
+      ANTHROPIC_API_KEY: sk-ant-ci-placeholder
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Required before typecheck/build/test — generated/ (the Prisma Client output) is
+      # gitignored, same as any local checkout, so it doesn't exist until this runs.
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
+      # migrate deploy (not `migrate dev`) — applies committed migrations as-is,
+      # non-interactively, without ever generating a new migration. The only mode
+      # that's safe to run unattended in CI.
+      - name: Apply database schema
+        run: npx prisma migrate deploy
+
+      - name: Run typecheck
+        run: npm run typecheck
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build
+        run: npm run build
