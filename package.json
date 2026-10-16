@@ -2,14 +2,14 @@
   "name": "ingressa",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run"
-  },
+ "scripts": {
+  "dev": "next dev",
+  "build": "next build",
+  "start": "next start",
+  "lint": "eslint",
+  "typecheck": "tsc --noEmit",
+  "postinstall": "prisma generate"
+},
   "dependencies": {
     "@anthropic-ai/sdk": "^0.132.1",
     "@clerk/nextjs": "^7.9.11",
